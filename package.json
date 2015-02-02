@@ -2,7 +2,7 @@
   "name": "yet-another-set",
   "version": "0.0.0",
   "description": "A set server",
-  "main": "index.js",
+  "main": "app.js",
   "author": "eemp",
   "dependencies": {
     "express": "3.4.8",
