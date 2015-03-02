@@ -4,12 +4,6 @@ var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var port = process.env.PORT || 3000;
-var session = require('express-session');
-
-//initialize session:
-app.use(session({secret: 'secretkey',
-		saveUninitialized: true,
-                resave: true}));
 
 server.listen(port, function () {
   console.log('Server listening at port %d', port);
