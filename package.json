@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
     "buildjsx": "watchify -t reactify public/src/card_gallery.jsx -o public/lib/card_gallery.js"
   },
   "repository": {
