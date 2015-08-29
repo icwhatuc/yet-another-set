@@ -1,0 +1,1 @@
+console.error("ReactifyError: /home/mihir/yet-another-set/public/src/chat.jsx: Parse Error: Line 30: Unexpected token ) while parsing file: /home/mihir/yet-another-set/public/src/chat.jsx");
