@@ -3,30 +3,29 @@ var BUFFER_SIZE = 100;
 
 var Message = React.createClass({
     render : function() {
-            if(this.props.type === 'user enters')
-            {
-                return (
-                    <li className="user-enters">
-                        <span className="uname">{this.props.uname}</span> has entered the room.
-                    </li>
-                );
-            }
-            
-            if(this.props.type === 'user exits')
-            {
-                return (
-                    <li className="user-exits">
-                        <span className="uname">{this.props.uname}</span> has left the room.
-                    </li>
-                );
-            }
-
+        if(this.props.type === 'user enters')
+        {
             return (
-                <li className="chat-msg">
-                    <span className="uname">{this.props.uname}</span>
-                    : {this.props.msg}
+                <li className="user-enters">
+                    <span className="uname">{this.props.uname}</span> has entered the room.
                 </li>
             );
+        }
+        
+        if(this.props.type === 'user exits')
+        {
+            return (
+                <li className="user-exits">
+                    <span className="uname">{this.props.uname}</span> has left the room.
+                </li>
+            );
+        }
+
+        return (
+            <li className="chat-msg">
+                <span className="uname">{this.props.uname}</span>
+                : {this.props.msg}
+            </li>
         );
     },
 });
