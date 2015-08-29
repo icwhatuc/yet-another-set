@@ -1,5 +1,7 @@
 var event_constants = require('../constants.js').event_constants;
 var User = require('../lib/User.js');
+var Lobby = require('../lib/Lobby.js');
+var Game = require('../lib/Game.js');
 
 function LobbyEvents() {}
 
@@ -11,6 +13,7 @@ LobbyEvents.prototype.group_events = function() {
     events[event_constants.USER_ENTERS] = self.user_entrance_handler;
     events[event_constants.USER_SPEAKS] = self.user_speech_handler;
     events[event_constants.USER_LEAVES] = self.user_leaves_handler;
+    events[event_constants.ROOM_CREATED]= self.room_created_handler;
     return events;
 }
 
@@ -36,3 +39,15 @@ LobbyEvents.prototype.user_leaves_handler = function(socket, data) {
     socket.broadcast.emit(event_constants.USER_LEAVES, data);
 }
 
+LobbyEvents.prototype.room_created_handler = function(socket, data) {
+    var self = this;
+//    console.log(socket);
+//    console.log(data);
+    var newGame = data;
+    console.log("room created handler");
+    var game = new Game(newGame.roomName, newGame.capacity);
+    data = { roomName: newGame.roomName, 
+             connectedPlayers: newGame.connectedPlayers,
+             capacity: newGame.capacity};
+    socket.broadcast.emit(event_constants.ROOM_CREATED, data);
+}
