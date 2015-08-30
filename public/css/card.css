@@ -1,0 +1,85 @@
+.card-block {
+  position: relative;
+  width: 100px;
+  height: 150px;
+  border-radius: 20px;
+  background: #fff;
+  -webkit-box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+  box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+}
+
+.striped{
+    font-size: 50px;
+    -webkit-background-clip: text;
+    color: transparent;
+    background-image: -webkit-linear-gradient(rgba(255, 255, 255, .5) 50%, transparent 50%, transparent);
+    background-image: -moz-linear-gradient(rgba(255, 255, 255, .5) 50%, transparent 50%, transparent);
+    background-image: -o-linear-gradient(rgba(255, 255, 255, .5) 50%, transparent 50%, transparent);
+    background-image: linear-gradient(rgba(255, 255, 255, .5) 50%, transparent 50%, transparent);
+}
+
+.empty {
+    font-size: 50px;
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke-width: 3px;
+    -webkit-text-stroke-color: #e42f45;
+    color: #e42f45;
+}
+
+.centercolumn {
+    position: relative;
+    margin: 0 auto;
+    width: 50%;
+    height: 100%;
+}
+
+.card {
+    text-align: center;
+    width: 100%;
+}
+
+.red {
+	background-color: #e42f45;
+}
+
+.blue {
+	background-color: #00969a;
+}
+
+.green {
+	background-color: #44c782;
+}
+
+.one-item {
+	height: 100%;
+	background-size: 2.5px;
+	line-height: 150px;
+}
+
+.two-item {
+	height: 50%;
+	background-size: 4px;
+	line-height: 75px;
+}
+
+.three-item {
+	height: 33.333%;
+	background-size: 6px;
+	line-height: 50px;
+}
+
+.diamonds:after {
+  content: "♦";
+}
+ 
+.hearts:after {
+  content: "♥";
+}
+ 
+.clubs:after {
+  content: "♣";
+}
+ 
+.spades:after {
+  content: "♠";
+}
