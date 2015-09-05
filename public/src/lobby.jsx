@@ -12,7 +12,7 @@ var Room = React.createClass({
     },
 });
 
-export.RoomList = React.createClass({
+var RoomList = module.exports = React.createClass({
     createRoomEventHandler : function(data) {
         var self = this;
         var cl = self.state.room_list;
@@ -48,8 +48,8 @@ export.RoomList = React.createClass({
         var room_list = self.state.room_list;
         var roomName = React.findDOMNode(this.refs.roomName).value.trim();
         var roomCapacity = React.findDOMNode(this.refs.roomCapacity).value.trim();
-        var newRoom = 
-        {
+        var newRoom = {
+            roomID: room_list.length + 1,
             roomName: roomName,
             connectedPlayers: 1,
             capacity: roomCapacity,
@@ -66,7 +66,7 @@ export.RoomList = React.createClass({
         
         var room_list = self.state.room_list.map(function(m) {
             return (
-                <Room roomName={m.roomName} 
+                <Room roomID={m.roomID} roomName={m.roomName} 
                  connectedPlayers={m.connectedPlayers}
                  capacity={m.capacity} />
             );

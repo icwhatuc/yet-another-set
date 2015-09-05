@@ -7,6 +7,7 @@ global.Link = Router.Link;
 global.Navigation = Router.Navigation;
 
 var Login = require('./login.jsx');
+var Lobby = require('./lobby.jsx');
 var ChatList = require('./chat.jsx');
 
 var App = React.createClass({
@@ -18,25 +19,6 @@ var App = React.createClass({
         return (
             <div id="app">
                 <RouteHandler/>
-            </div>
-        );
-    },
-});
-
-var Lobby = React.createClass({
-    mixins : [Navigation],
-    render : function() {
-        return (
-            <div className="Lobby">
-                <div className="game">
-                    <Link to="game" params={{id: "1"}}>Game 1</Link>
-                </div>
-                <div className="game">
-                    <Link to="game" params={{id: "2"}}>Game 2</Link>
-                </div>
-                <div className="game">
-                    <Link to="game" params={{id: "3"}}>Game 3</Link>
-                </div>
             </div>
         );
     },
