@@ -1,0 +1,22 @@
+#login {
+    background-color: #000000;
+    height: 100%;
+}
+
+.login-form {
+    top: 50%;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
+
+#uname {
+    background-color: transparent;
+    color: #ffffff;
+    font-size: 200%;
+    border: none;
+    border-bottom: 2px solid #fff;
+    outline: none;
+    text-align: center;
+}
+

@@ -10,44 +10,24 @@ module.exports = LobbyEvents;
 LobbyEvents.prototype.group_events = function() {
     var self = this;
     var events = {};
-    events[event_constants.USER_ENTERS] = self.user_entrance_handler;
-    events[event_constants.USER_SPEAKS] = self.user_speech_handler;
-    events[event_constants.USER_LEAVES] = self.user_leaves_handler;
+    events[event_constants.NEW_USER] = self.new_user_handler;
     events[event_constants.ROOM_CREATED]= self.room_created_handler;
     return events;
 }
 
-LobbyEvents.prototype.user_entrance_handler = function(socket, data) {
+LobbyEvents.prototype.new_user_handler = function(socket, name) {
     var self = this;
-    var user = new User(data);
+    var user = new User(name);
     socket.user = user;
-    data = { uname: user.name(), type: event_constants.USER_ENTERS };
-    socket.broadcast.emit(event_constants.USER_ENTERS, data);
-}
-
-LobbyEvents.prototype.user_speech_handler = function(socket, data) {
-    var self = this;
-    var user = socket.user;
-    data = { msg: data, uname: user.name(), type: event_constants.USER_SPEAKS };
-    socket.emit(event_constants.USER_SPEAKS, data);
-    socket.broadcast.emit(event_constants.USER_SPEAKS, data);
-}
-
-LobbyEvents.prototype.user_leaves_handler = function(socket, data) {
-    var self = this;
-    data = { uname: user.name(), type: event_constants.USER_LEAVES };
-    socket.broadcast.emit(event_constants.USER_LEAVES, data);
 }
 
 LobbyEvents.prototype.room_created_handler = function(socket, data) {
     var self = this;
-//    console.log(socket);
-//    console.log(data);
     var newGame = data;
-    console.log("room created handler");
     var game = new Game(newGame.roomName, newGame.capacity);
     data = { roomName: newGame.roomName, 
              connectedPlayers: newGame.connectedPlayers,
              capacity: newGame.capacity};
     socket.broadcast.emit(event_constants.ROOM_CREATED, data);
 }
+

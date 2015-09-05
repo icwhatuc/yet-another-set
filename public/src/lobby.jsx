@@ -1,46 +1,39 @@
-var socket = io();
-var BUFFER_SIZE = 100;
-
 var Room = React.createClass({
     render : function() {
         return (
             <li className="roomInfo">
-                <div className="roomInfo">{this.props.roomName}</div>
-                <div className="roomConnectedPlayers"># Players: {this.props.connectedPlayers}</div>
-                <div className="roomCapacity">Capacity: {this.props.capacity}</div>
+                <Link to="game" params={{id: this.props.roomID}}>
+                    <div className="roomInfo">{this.props.roomName}</div>
+                    <div className="roomConnectedPlayers"># Players: {this.props.connectedPlayers}</div>
+                    <div className="roomCapacity">Capacity: {this.props.capacity}</div>
+                </Link>
             </li>
         );
     },
 });
 
-function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-    results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
-        
-var RoomList = React.createClass({
+export.RoomList = React.createClass({
     createRoomEventHandler : function(data) {
         var self = this;
         var cl = self.state.room_list;
         cl.push(data);
-        if(cl.size > BUFFER_SIZE) cl.shift();
         self.setState({room_list : cl});
     },
     getInitialState : function() {
         return {
             room_list : [
-            {
-                roomName: "Room 1",
-                connectedPlayers: 2,
-                capacity: 4
-            },
-            {
-                roomName: "Room 2",
-                connectedPlayers: 3,
-                capacity: 8
-            }
+                {
+                    roomID : 1,
+                    roomName: "Room 1",
+                    connectedPlayers: 2,
+                    capacity: 4
+                },
+                {
+                    roomID : 2,
+                    roomName: "Room 2",
+                    connectedPlayers: 3,
+                    capacity: 8
+                }
             ]
         };
     },
@@ -48,13 +41,6 @@ var RoomList = React.createClass({
         var self = this;
 
         socket.on('room created', self.createRoomEventHandler);
-        /*
-        socket.emit('user enters', getParameterByName('u'));
-
-        socket.on('user enters', self.genericEventHandler);
-        socket.on('user exits', self.genericEventHandler);
-        socket.on('user speaks', self.genericEventHandler);
-        */
     },
     handleCreateRoom : function(e) {
         e.preventDefault();
@@ -100,9 +86,4 @@ var RoomList = React.createClass({
         );
     }
 });
-
-React.render(
-    <RoomList/>,
-    document.getElementById('content')
-);
 

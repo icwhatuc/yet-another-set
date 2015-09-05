@@ -25,18 +25,22 @@ server.listen(2719, function () {
 });
 
 io.on('connection', function(socket) {
-    
-    for(var event_group in events)
-    {
-        var evgroupObj = new events[event_group]();
-        var group_events = evgroupObj.group_events();
-        var geventlist = Object.keys(group_events);
+    var event_groups = Object.keys(events);
 
-        geventlist.forEach(function(e) {
+    socket.on('disconnect', function() {
+        console.log('User disconnected');
+    });
+
+    event_groups.forEach(function(eg) {
+        var eg_obj = new events[eg]();
+        var event_list = eg_obj.group_events();
+        var gevents = Object.keys(event_list);
+
+        gevents.forEach(function(e) {
             socket.on(e, function(data) {
-                group_events[e].apply(evgroupObj, [socket, data]);
+                event_list[e].apply(eg_obj, [socket, data]);
             });
         });
-    }
+    });
 });
 

@@ -1,4 +1,3 @@
-var socket = io();
 var BUFFER_SIZE = 100;
 
 var Message = React.createClass({
@@ -53,7 +52,7 @@ var ChatList = React.createClass({
     componentDidMount : function() {
         var self = this;
         
-        socket.emit('user enters', getParameterByName('u'));
+        socket.emit('user enters', this.props.params.id);
 
         socket.on('user enters', self.genericEventHandler);
         socket.on('user exits', self.genericEventHandler);
@@ -75,19 +74,23 @@ var ChatList = React.createClass({
         
         return (
             <div className="chat">
+                <Link to="lobby">Go back to Lobby</Link>
                 <ol>
                     {chat_list}
                 </ol>
                 <form onSubmit={this.handleChatSubmit}>
-                    <input ref="msg" autocomplete="off" placeholder="Say something..."/>
+                    <input ref="msg" autoComplete="off" placeholder="Say something..."/>
                 </form>
             </div>
         );
     }
 });
 
+module.exports = ChatList;
+
+/*
 React.render(
     <ChatList/>,
     document.getElementById('content')
 );
-
+*/
