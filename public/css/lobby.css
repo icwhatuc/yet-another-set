@@ -1,5 +1,11 @@
 #lobby {
-    width: 66%;
+    width: 100%;
+    display: inline-block;
+}
+
+.rooms-section {
+    float: left;
+    width: 65%;
 }
 
 ul.room-list {

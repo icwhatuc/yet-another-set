@@ -1,3 +1,5 @@
+var ChatList = require('./chat.jsx');
+
 var Room = React.createClass({
     render : function() {
         return (
@@ -76,14 +78,17 @@ var RoomList = module.exports = React.createClass({
         
         return (
             <div id="lobby">
-                <ul className="room-list">
-                    {room_list}
-                </ul>
-                <form onSubmit={this.handleCreateRoom}>
-                    <input ref="roomName" autoComplete="off" placeholder="Enter room name..."/>
-                    <input ref="roomCapacity" autoComplete="off" placeholder="Room capacity"/>
-                    <input type="submit" value="Submit"/>
-                </form>
+                <div className="rooms-section">
+                    <ul className="room-list">
+                        {room_list}
+                    </ul>
+                    <form onSubmit={this.handleCreateRoom}>
+                        <input ref="roomName" autoComplete="off" placeholder="Enter room name..."/>
+                        <input ref="roomCapacity" autoComplete="off" placeholder="Room capacity"/>
+                        <input type="submit" value="Submit"/>
+                    </form>
+                </div>
+                <ChatList id="lobby"/>
             </div>
         );
     }
