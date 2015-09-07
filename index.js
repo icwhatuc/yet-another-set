@@ -18,7 +18,7 @@ for(var route in routes)
 
 app.use(express.static('public'));
 
-server.listen(2719, function () {
+server.listen(314, function () {
     var host = server.address().address;
     var port = server.address().port;
     console.log('Game app listening at http://%s:%s', host, port);

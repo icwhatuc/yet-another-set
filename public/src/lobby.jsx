@@ -1,11 +1,11 @@
 var Room = React.createClass({
     render : function() {
         return (
-            <li className="roomInfo">
+            <li className="room">
                 <Link to="game" params={{id: this.props.roomID}}>
-                    <div className="roomInfo">{this.props.roomName}</div>
-                    <div className="roomConnectedPlayers"># Players: {this.props.connectedPlayers}</div>
-                    <div className="roomCapacity">Capacity: {this.props.capacity}</div>
+                    <div className="room-name">{this.props.roomName}</div>
+                    <div className="room-players"># Players: {this.props.connectedPlayers}</div>
+                    <div className="room-capacity">Capacity: {this.props.capacity}</div>
                 </Link>
             </li>
         );
@@ -73,8 +73,8 @@ var RoomList = module.exports = React.createClass({
         });
         
         return (
-            <div className="content">
-                <ul>
+            <div id="lobby">
+                <ul className="room-list">
                     {room_list}
                 </ul>
                 <form onSubmit={this.handleCreateRoom}>
