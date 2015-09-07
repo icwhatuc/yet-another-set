@@ -7,13 +7,15 @@ var cards_data = [
 	{ color : 'green', shape : 'clubs', fill : 'striped', number: 1}
 ];
 
-var CardGallery = React.createClass({
+var CardGallery = module.exports = React.createClass({
 	getInitialState : function() {
-		return { data : cards_data };
+        console.log("set data", cards_data.slice(0));
+        console.log("after set", cards_data.slice(0));
+		return { data : cards_data.slice(0) };
 	},
 	getRows: function() {
-		var cardArray = this.state.data;
-		var numberOfCards = cardArray.length;
+		var cardArray = this.state.data.slice(0); console.log("state data", this.state.data.slice(0));
+        var numberOfCards = cardArray.length;
 	
 		var rows = [], size = 3;
 
@@ -86,9 +88,4 @@ var Card = React.createClass({
     }
 
 });
-
-React.render(
-  	<CardGallery />,
-  	document.getElementById('content')
-);
 

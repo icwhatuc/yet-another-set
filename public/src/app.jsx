@@ -8,7 +8,7 @@ global.Navigation = Router.Navigation;
 
 var Login = require('./login.jsx');
 var Lobby = require('./lobby.jsx');
-var ChatList = require('./chat.jsx');
+var Game = require('./game.jsx');
 
 var App = React.createClass({
     mixins : [Navigation],
@@ -23,8 +23,6 @@ var App = React.createClass({
         );
     },
 });
-
-var Game = ChatList;
 
 var routes = (
     <Route handler={App}>

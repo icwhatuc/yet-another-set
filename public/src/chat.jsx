@@ -46,7 +46,7 @@ var ChatList = React.createClass({
     componentDidMount : function() {
         var self = this;
         
-        socket.emit(event_constants.USER_ENTERS, this.props.params.id);
+        socket.emit(event_constants.USER_ENTERS, this.props.id);
 
         socket.on(event_constants.USER_ENTERS, self.genericEventHandler);
         socket.on(event_constants.USER_LEAVES, self.genericEventHandler);
@@ -69,7 +69,6 @@ var ChatList = React.createClass({
         
         return (
             <div className="chat">
-                <Link to="lobby">Go back to Lobby</Link>
                 <ol>
                     {chat_list}
                 </ol>

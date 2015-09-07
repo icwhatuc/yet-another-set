@@ -1,3 +1,9 @@
+.card-gallery {
+    height: 100%;
+    width: 65%;
+    float: left;
+}
+
 .clearfix:after {
    content: " "; /* Older browser do not support empty content */
    visibility: hidden;
