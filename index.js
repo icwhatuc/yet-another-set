@@ -4,7 +4,7 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var routes = require('./routes.js');
 var events = require('./events.js'); // socket events
-var Lobby = require('./lib/lobby.js');
+var Lobby = require('./lib/Lobby.js');
 
 // register middleware if any
 
@@ -19,7 +19,7 @@ for(var route in routes)
 
 app.use(express.static('public'));
 
-server.listen(314, function () {
+server.listen(2719, function () {
     var host = server.address().address;
     var port = server.address().port;
     console.log('Game app listening at http://%s:%s', host, port);
