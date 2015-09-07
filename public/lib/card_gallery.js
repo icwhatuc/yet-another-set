@@ -1,3 +1,4 @@
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var cards_data = [
 	{ color : 'red', shape : 'diamonds', fill : 'striped', number : 2 },  
 	{ color : 'green', shape : 'spades', fill : 'solid', number : 1 },
@@ -7,7 +8,7 @@ var cards_data = [
 	{ color : 'green', shape : 'clubs', fill : 'striped', number: 1}
 ];
 
-var CardGallery = module.exports = React.createClass({
+var CardGallery = module.exports = React.createClass({displayName: "exports",
 	getInitialState : function() {
 		this.selectedCards = [];
 
@@ -29,20 +30,20 @@ var CardGallery = module.exports = React.createClass({
 
     		for (var i = 0; i < row.length; i++) {
     			var card = row[i];
-    			cards.push( <Card color={card.color} shape={card.shape} fill={card.fill} number={card.number} />);
+    			cards.push( React.createElement(Card, {color: card.color, shape: card.shape, fill: card.fill, number: card.number}));
     		};
 
     		return (
-    			<div className="card-row clearfix">
-    				{cards}
-    			</div>
+    			React.createElement("div", {className: "card-row clearfix"}, 
+    				cards
+    			)
     		);
     	});
 
     	return (
-    		<div className="all-card-rows clearfix">
-    			{rowDiv}
-    		</div>
+    		React.createElement("div", {className: "all-card-rows clearfix"}, 
+    			rowDiv
+    		)
     	)
 	},
 	handleChildClick: function(e) {
@@ -78,14 +79,14 @@ var CardGallery = module.exports = React.createClass({
 	},
     render: function() {
 		return (
-			<div className="card-gallery" onClick={this.handleChildClick}>
-				{this.getRows()}
-      		</div>
+			React.createElement("div", {className: "card-gallery", onClick: this.handleChildClick}, 
+				this.getRows()
+      		)
 		);
 	}
 });
 
-var Card = React.createClass({
+var Card = React.createClass({displayName: "Card",
 	getInitialState: function() {
 		return { selected : false};
 	},
@@ -106,13 +107,13 @@ var Card = React.createClass({
 
 		var itemDiv = [];
 		for (var i = 0; i < number; i++) {
-			itemDiv.push( <div className={classString}></div> );
+			itemDiv.push( React.createElement("div", {className: classString}) );
 		}
 
 		return ( 
-			<div className="centercolumn">
-				{itemDiv}
-			</div>
+			React.createElement("div", {className: "centercolumn"}, 
+				itemDiv
+			)
 		)
 	},
 	childClick: function() {
@@ -128,11 +129,13 @@ var Card = React.createClass({
 			classString += ' ' + 'selected';
 
         return (
-        	<div className={classString} onClick={this.childClick}>
-	            {this.numberSetUp()}
-	        </div>
+        	React.createElement("div", {className: classString, onClick: this.childClick}, 
+	            this.numberSetUp()
+	        )
         );
     }
 
 });
 
+
+},{}]},{},[1]);

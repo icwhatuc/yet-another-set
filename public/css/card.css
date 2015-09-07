@@ -13,15 +13,21 @@
 }
 
 .card-block {
-  position: relative;
-  width: 100px;
-  height: 150px;
-  border-radius: 20px;
-  background: #fff;
-  -webkit-box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
-  box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
-  float:left;
-  margin: 5px;
+    position: relative;
+    width: 100px;
+    height: 150px;
+    border-radius: 20px;
+    background: #fff;
+    -webkit-box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+    box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+    float:left;
+    margin: 5px;
+}
+
+.selected {
+    -webkit-box-shadow: 3px 3px 7px rgba(90,195,48,1);
+    box-shadow: 3px 3px 7px rgba(90,195,48,1);
+    background-color: rgba(90,195,48,0.3);
 }
 
 .striped{
@@ -110,17 +116,21 @@
 }
 
 .diamonds:after {
-  content: "♦";
+    content: "♦";
 }
  
 .hearts:after {
-  content: "♥";
+    content: "♥";
 }
  
 .clubs:after {
-  content: "♣";
+    content: "♣";
 }
  
 .spades:after {
+<<<<<<< Updated upstream
   content: "♠";
+=======
+    content: "♠";
+>>>>>>> Stashed changes
 }
