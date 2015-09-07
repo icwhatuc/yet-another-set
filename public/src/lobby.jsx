@@ -14,35 +14,37 @@ var Room = React.createClass({
 
 var RoomList = module.exports = React.createClass({
     createRoomEventHandler : function(data) {
+        console.log("createRoomEventHandler");
+        console.log(data);
         var self = this;
         var cl = self.state.room_list;
         cl.push(data);
-        self.setState({room_list : cl});
+        self.setState({room_list : cl}); // auto calls renders
+        console.log("finishcreateRoomEventHandler");
+    },
+    getAllRoomsEventHandler : function(data) {
+        // get all rooms and put it in the room_list
+        var self = this;
+        console.log("getAllRoomsEventHandler " + data);
+        
+        self.setState({room_list : data});
     },
     getInitialState : function() {
+        console.log("Get initial state called!");
         return {
-            room_list : [
-                {
-                    roomID : 1,
-                    roomName: "Room 1",
-                    connectedPlayers: 2,
-                    capacity: 4
-                },
-                {
-                    roomID : 2,
-                    roomName: "Room 2",
-                    connectedPlayers: 3,
-                    capacity: 8
-                }
-            ]
+            room_list : []
         };
     },
     componentDidMount : function() {
+        console.log("componentDidMount");
         var self = this;
 
         socket.on('room created', self.createRoomEventHandler);
+        socket.on('get all rooms', self.getAllRoomsEventHandler);
+        socket.emit('get all rooms', "");
     },
     handleCreateRoom : function(e) {
+        console.log("handleCreateRoom");
         e.preventDefault();
         var self = this;
         var room_list = self.state.room_list;

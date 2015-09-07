@@ -7,5 +7,6 @@ module.exports = {
         ROOM_CREATED: 'room created',
         ROOM_STARTED: 'room started',
         ROOM_USER_ENTERED: 'room user entered',
-    },
+        GET_ALL_ROOMS: 'get all rooms'
+    }
 };
