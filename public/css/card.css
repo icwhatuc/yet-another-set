@@ -128,9 +128,5 @@
 }
  
 .spades:after {
-<<<<<<< Updated upstream
-  content: "♠";
-=======
     content: "♠";
->>>>>>> Stashed changes
 }
