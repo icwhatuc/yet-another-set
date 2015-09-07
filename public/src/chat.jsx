@@ -1,8 +1,9 @@
 var BUFFER_SIZE = 100;
+var event_constants = require('./constants.js').event_constants;
 
 var Message = React.createClass({
     render : function() {
-        if(this.props.type === 'user enters')
+        if(this.props.type === event_constants.USER_ENTERS)
         {
             return (
                 <li className="user-enters">
@@ -11,7 +12,7 @@ var Message = React.createClass({
             );
         }
         
-        if(this.props.type === 'user exits')
+        if(this.props.type === event_constants.USER_LEAVES)
         {
             return (
                 <li className="user-exits">
@@ -29,13 +30,6 @@ var Message = React.createClass({
     },
 });
 
-function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-    results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
-        
 var ChatList = React.createClass({
     genericEventHandler : function(data) {
         var self = this;
@@ -52,23 +46,24 @@ var ChatList = React.createClass({
     componentDidMount : function() {
         var self = this;
         
-        socket.emit('user enters', this.props.params.id);
+        socket.emit(event_constants.USER_ENTERS, this.props.params.id);
 
-        socket.on('user enters', self.genericEventHandler);
-        socket.on('user exits', self.genericEventHandler);
-        socket.on('user speaks', self.genericEventHandler);
+        socket.on(event_constants.USER_ENTERS, self.genericEventHandler);
+        socket.on(event_constants.USER_LEAVES, self.genericEventHandler);
+        socket.on(event_constants.USER_SPEAKS, self.genericEventHandler);
     },
     handleChatSubmit : function(e) {
-        e.preventDefault();
         var msg = React.findDOMNode(this.refs.msg).value.trim();
+        React.findDOMNode(this.refs.msg).value = '';
         socket.emit('user speaks', msg);
+        e.preventDefault();
     },
     render : function() {
         var self = this;
         
         var chat_list = self.state.chat_list.map(function(m) {
             return (
-                <Message uname={m.uname} msg={m.msg} />
+                <Message uname={m.uname} msg={m.msg} type={m.type}/>
             );
         });
         
