@@ -1,3 +1,11 @@
+.clearfix:after {
+   content: " "; /* Older browser do not support empty content */
+   visibility: hidden;
+   display: block;
+   height: 0;
+   clear: both;
+}
+
 .card-block {
   position: relative;
   width: 100px;
@@ -6,24 +14,50 @@
   background: #fff;
   -webkit-box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
   box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+  float:left;
+  margin: 5px;
 }
 
 .striped{
-    font-size: 50px;
     -webkit-background-clip: text;
-    color: transparent;
+    color: transparent !important;
     background-image: -webkit-linear-gradient(rgba(255, 255, 255, .5) 50%, transparent 50%, transparent);
     background-image: -moz-linear-gradient(rgba(255, 255, 255, .5) 50%, transparent 50%, transparent);
     background-image: -o-linear-gradient(rgba(255, 255, 255, .5) 50%, transparent 50%, transparent);
     background-image: linear-gradient(rgba(255, 255, 255, .5) 50%, transparent 50%, transparent);
 }
 
+.striped.red {
+    background-color: #e42f45;
+}
+
+.striped.blue {
+    background-color: #00969a;
+}
+
+.striped.green {
+    background-color: #44c782;
+}
+
 .empty {
-    font-size: 50px;
     -webkit-text-fill-color: white;
-    -webkit-text-stroke-width: 3px;
+    -webkit-text-stroke-width: 1px;
+}
+
+.empty.red {
     -webkit-text-stroke-color: #e42f45;
-    color: #e42f45;
+}
+
+.empty.blue {
+    -webkit-text-stroke-color: #00969a;
+}
+
+.empty.green {
+    -webkit-text-stroke-color: #44c782;
+}
+
+.solid {
+    font-size: 50px;
 }
 
 .centercolumn {
@@ -34,20 +68,21 @@
 }
 
 .card {
+    font-size: 50px;
     text-align: center;
     width: 100%;
 }
 
 .red {
-	background-color: #e42f45;
+	color: #e42f45;
 }
 
 .blue {
-	background-color: #00969a;
+	color: #00969a;
 }
 
 .green {
-	background-color: #44c782;
+	color: #44c782;
 }
 
 .one-item {

@@ -1,8 +1,10 @@
 var cards_data = [
 	{ color : 'red', shape : 'diamonds', fill : 'striped', number : 2 },  
-	{ color : 'green', shape : 'spades', fill : 'striped', number : 1 },
+	{ color : 'green', shape : 'spades', fill : 'solid', number : 1 },
 	{ color : 'blue', shape : 'clubs', fill : 'solid', number : 3 },
-	{ color : 'green', shape : 'diamonds', fill : 'empty', number : 1 }
+	{ color : 'red', shape : 'diamonds', fill : 'empty', number : 2 },
+	{ color : 'blue', shape: 'spades', fill: 'empty', number: 3},
+	{ color : 'green', shape : 'clubs', fill : 'striped', number: 1}
 ];
 
 var CardGallery = React.createClass({
@@ -27,14 +29,14 @@ var CardGallery = React.createClass({
     		};
 
     		return (
-    			<div className="card-row">
+    			<div className="card-row clearfix">
     				{cards}
     			</div>
     		);
     	});
 
     	return (
-    		<div className="all-card-rows">
+    		<div className="all-card-rows clearfix">
     			{rowDiv}
     		</div>
     	)

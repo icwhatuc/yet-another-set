@@ -1,9 +1,11 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var cards_data = [
 	{ color : 'red', shape : 'diamonds', fill : 'striped', number : 2 },  
-	{ color : 'green', shape : 'spades', fill : 'striped', number : 1 },
+	{ color : 'green', shape : 'spades', fill : 'solid', number : 1 },
 	{ color : 'blue', shape : 'clubs', fill : 'solid', number : 3 },
-	{ color : 'green', shape : 'diamonds', fill : 'empty', number : 1 }
+	{ color : 'red', shape : 'diamonds', fill : 'empty', number : 2 },
+	{ color : 'blue', shape: 'spades', fill: 'empty', number: 3},
+	{ color : 'green', shape : 'clubs', fill : 'striped', number: 1}
 ];
 
 var CardGallery = React.createClass({displayName: "CardGallery",
@@ -28,14 +30,14 @@ var CardGallery = React.createClass({displayName: "CardGallery",
     		};
 
     		return (
-    			React.createElement("div", {className: "card-row"}, 
+    			React.createElement("div", {className: "card-row clearfix"}, 
     				cards
     			)
     		);
     	});
 
     	return (
-    		React.createElement("div", {className: "all-card-rows"}, 
+    		React.createElement("div", {className: "all-card-rows clearfix"}, 
     			rowDiv
     		)
     	)
