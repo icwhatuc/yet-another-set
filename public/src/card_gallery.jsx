@@ -1,3 +1,5 @@
+var event_constants = require('./constants.js').event_constants;
+
 var cards_data = [
 	{ color : 'red', shape : 'diamonds', fill : 'striped', number : 2 },  
 	{ color : 'green', shape : 'spades', fill : 'solid', number : 1 },
@@ -7,19 +9,32 @@ var cards_data = [
 	{ color : 'green', shape : 'clubs', fill : 'striped', number: 1}
 ];
 
+var card_map = {
+	shape : { 1 : 'clubs', 2 : 'diamonds', 3 : 'spades' },
+	fill : { 1 : 'striped', 2 : 'empty', 3 : 'solid' },
+	color : { 1 : 'blue', 2 : 'red', 3 : 'green' }
+};
+
 var CardGallery = module.exports = React.createClass({
 	getInitialState : function() {
 		this.selectedCards = [];
 
-        console.log("set data", cards_data.slice(0));
-        console.log("after set", cards_data.slice(0));
 		return { data : cards_data.slice(0) };
 	},
+	componentDidMount: function() {
+		var self = this;
+		socket.on(event_constants.UPDATE_BOARD, function (board) {
+			var cards_data = board.map(function(c) {
+				return { color: card_map.color[c._color], shape: card_map.shape[c._shape], fill: card_map.fill[c._animation], number: c._number };
+			});
+			self.setState({data : cards_data});
+		});
+	},
 	getRows: function() {
-		var cardArray = this.state.data.slice(0); console.log("state data", this.state.data.slice(0));
+		var cardArray = this.state.data.slice(0);
         var numberOfCards = cardArray.length;
 	
-		var rows = [], size = 3;
+		var rows = [], size = numberOfCards/3;
 
 		while (cardArray.length > 0)
     		rows.push(cardArray.splice(0, size));
@@ -53,7 +68,7 @@ var CardGallery = module.exports = React.createClass({
 
 		if (this.selectedCards.length == 3)
 			//send info to server
-			console.log('you selected 3');
+			console.log('this is three');
 		else
 			console.log('restart');
 

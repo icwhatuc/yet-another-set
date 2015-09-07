@@ -13,14 +13,18 @@ GameEvents.prototype.group_events = function() {
     events[event_constants.USER_ENTERS_GAME] = self.user_enters_handler;
     events[event_constants.USER_EXITS_GAME] = self.user_exits_handler;
     events[event_constants.USER_SUBMITS_SET] = self.set_submission_handler;
+    console.log(event_constants);
     return events;
 }
 
-GameEvents.prototype.user_enters_handler = function(socket, data) {
+GameEvents.prototype.user_enters_handler = function(socket, gameId) {
     // data will have the game id
     // add the user to the game
     // notify everyone in the game that the user joined
     // start the game if necessary & let everyone know about he game board
+    var game = gm.getGameByID(gameId);
+
+    socket.emit(event_constants.UPDATE_BOARD, game.board());
 }
 
 GameEvents.prototype.user_exits_handler = function(socket, data) {
