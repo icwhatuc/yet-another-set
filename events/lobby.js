@@ -27,9 +27,7 @@ LobbyEvents.prototype.room_created_handler = function(socket, data) {
     console.log("server room_created_handler");
     var self = this;
     var newGame = data;
-    var game = new Game(newGame.roomName, newGame.capacity); // this is not used...
-    gm.createGame(newGame.roomName, newGame.capacity);
-    roomId++;
+    gm.createGame(newGame.roomName, newGame.capacity); // roomId modified in here!
     data = { roomID: roomId,
              roomName: newGame.roomName, 
              connectedPlayers: newGame.connectedPlayers,
@@ -46,27 +44,16 @@ LobbyEvents.prototype.get_all_rooms_handler = function(socket, data) {
     for (var key in gm._games)
     {
         var game = gm._games[key];
-        console.log("GAME");
+        console.log("GAME" + key);
         console.log(game);
         var room = {
-            roomID: 111, // TODO
-            roomName: game._id,
+            roomID: game._id,
+            roomName: key,
             connectedPlayers: 777, // TODO,
             capacity: game._size
         }
         data.push(room);
     }
-    /*
-    for(var ii=0; ii<gm._games.length; ++ii) {
-        var room = {
-            roomID: 111,
-            roomName: "222", //gm._games[ii]._id,
-            connectedPlayers: 777,
-            capacity: gm._games[ii]._size
-        };
-        data.push_back(room);
-    }
-    */
     console.log("before broadcast");
     console.log(data);
     socket.broadcast.emit(event_constants.GET_ALL_ROOMS, data);

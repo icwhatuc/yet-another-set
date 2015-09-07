@@ -26,7 +26,7 @@ server.listen(31415, function () {
 });
 
 global.gm = new Lobby();
-global.roomId = 1;
+global.roomId = 0;
 
 io.on('connection', function(socket) {
     var event_groups = Object.keys(events);

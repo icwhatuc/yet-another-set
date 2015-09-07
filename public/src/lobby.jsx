@@ -51,7 +51,7 @@ var RoomList = module.exports = React.createClass({
         var roomName = React.findDOMNode(this.refs.roomName).value.trim();
         var roomCapacity = React.findDOMNode(this.refs.roomCapacity).value.trim();
         var newRoom = {
-            roomID: room_list.length + 1,
+            roomID: room_list.length + 1, // HACK - needed to keep numbers in sync
             roomName: roomName,
             connectedPlayers: 1,
             capacity: roomCapacity,
