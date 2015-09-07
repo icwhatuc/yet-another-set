@@ -6,6 +6,6 @@ module.exports = {
         USER_LEAVES : 'user exits',
         ROOM_CREATED: 'room created',
         ROOM_STARTED: 'room started',
-        ROOM_USER_ENTERED: 'room user enered',
+        ROOM_USER_ENTERED: 'room user entered',
     },
 };

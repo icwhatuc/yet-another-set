@@ -78,8 +78,8 @@ var RoomList = module.exports = React.createClass({
                     {room_list}
                 </ul>
                 <form onSubmit={this.handleCreateRoom}>
-                    <input ref="roomName" autocomplete="off" placeholder="Enter room name..."/>
-                    <input ref="roomCapacity" autocomplete="off" placeholder="Room capacity"/>
+                    <input ref="roomName" autoComplete="off" placeholder="Enter room name..."/>
+                    <input ref="roomCapacity" autoComplete="off" placeholder="Room capacity"/>
                     <input type="submit" value="Submit"/>
                 </form>
             </div>

@@ -4,6 +4,7 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var routes = require('./routes.js');
 var events = require('./events.js'); // socket events
+var Lobby = require('./lib/lobby.js');
 
 // register middleware if any
 
@@ -23,6 +24,8 @@ server.listen(314, function () {
     var port = server.address().port;
     console.log('Game app listening at http://%s:%s', host, port);
 });
+
+global.gm = new Lobby();
 
 io.on('connection', function(socket) {
     var event_groups = Object.keys(events);
