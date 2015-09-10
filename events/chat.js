@@ -20,6 +20,7 @@ ChatEvents.prototype.user_entrance_handler = function(socket, room) {
     var self = this;
     var user = socket.user;
     if(!user) return;
+    if(user.room()) socket.leave(user.room());
     user.room(room);
     socket.join(room);
     data = { uname: user.name(), type: event_constants.USER_ENTERS };

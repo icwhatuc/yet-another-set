@@ -14,7 +14,6 @@ GameEvents.prototype.group_events = function() {
     events[event_constants.USER_ENTERS_GAME] = self.user_enters_handler;
     events[event_constants.USER_EXITS_GAME] = self.user_exits_handler;
     events[event_constants.USER_SUBMITS_SET] = self.set_submission_handler;
-    console.log(event_constants);
     return events;
 }
 

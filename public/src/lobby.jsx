@@ -1,4 +1,5 @@
 var ChatList = require('./chat.jsx');
+var LOBBY_CHAT_ID = 'lobby';
 
 var Room = React.createClass({
     render : function() {
@@ -88,7 +89,7 @@ var RoomList = module.exports = React.createClass({
                         <input type="submit" value="Submit"/>
                     </form>
                 </div>
-                <ChatList id="lobby"/>
+                <ChatList id={LOBBY_CHAT_ID}/>
             </div>
         );
     }
