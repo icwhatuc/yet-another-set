@@ -16,6 +16,6 @@ module.exports = {
         USER_ENTERS_GAME : 'user enters game',
         USER_EXITS_GAME : 'user exits game',
         USER_SUBMITS_SET : 'user submits set',
-        UPDATE_BOARD : 'update board'
+        UPDATE_BOARD : 'update board',
     }
 };

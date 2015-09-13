@@ -15,6 +15,12 @@ var card_map = {
 	color : { 1 : 'blue', 2 : 'red', 3 : 'green' }
 };
 
+var card_num_map = {
+	shape : { 'clubs':1, 'diamonds':2, 'spades':3 },
+	fill : { 'striped':1, 'empty':2, 'solid':3 },
+	color : { 'blue':1, 'red':2, 'green':3 }
+};
+
 var CardGallery = module.exports = React.createClass({
 	getInitialState : function() {
 		this.selectedCards = [];
@@ -29,6 +35,10 @@ var CardGallery = module.exports = React.createClass({
 			});
 			self.setState({data : cards_data});
 		});
+        socket.on(event_constants.USER_SUBMITS_SET, function (data) {
+            // data is a bool to say if it's a set or not
+            console.log(data);
+        });
 	},
 	getRows: function() {
 		var cardArray = this.state.data.slice(0);
@@ -66,11 +76,33 @@ var CardGallery = module.exports = React.createClass({
 		var selectHash = this.formSelectHash(className);
 		this.selectedCards.push(selectHash);
 
-		if (this.selectedCards.length == 3)
+		if (this.selectedCards.length === 3) {
 			//send info to server
 			console.log('this is three');
-		else
+            console.log(this.props);
+            console.log(this.selectedCards);
+            var selectedCardsNumberForm = [];;
+            for(var ii=0; ii<3; ++ii) // 3 cards in one set
+            {
+                var selectedCardNumberForm = 
+                {
+                    color: card_num_map.color[this.selectedCards[ii].color],
+                    fill: card_num_map.fill[this.selectedCards[ii].fill],
+                    shape: card_num_map.shape[this.selectedCards[ii].shape], 
+                    number: this.selectedCards[ii].number,
+                }
+                selectedCardsNumberForm.push(selectedCardNumberForm);
+            }
+            var data = 
+            {
+                selectedCards: selectedCardsNumberForm,
+                gameId: this.props.id
+            }
+            socket.emit(event_constants.USER_SUBMITS_SET, data);
+        }
+		else {
 			console.log('restart');
+        }
 
 	},
 	formSelectHash: function(string) {

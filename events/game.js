@@ -2,6 +2,7 @@ var event_constants = require('../constants.js').event_constants;
 var User = require('../lib/User.js');
 var Lobby = require('../lib/Lobby.js');
 var Game = require('../lib/Game.js');
+var Card = require('../lib/Card.js');
 
 function GameEvents() {}
 
@@ -39,4 +40,23 @@ GameEvents.prototype.set_submission_handler = function(socket, data) {
     // check if the set is valid
     // let everyone know about the new board state if necessary
     // or let the user know if it failed
+    console.log("set_submission_handler");
+    console.log(data);
+
+    var game = gm.getGameByID(data.gameId);
+
+    var set = [];
+    for(var ii=0; ii<3; ++ii) {
+        var card = new Card(data.selectedCards[ii].color,
+                            data.selectedCards[ii].fill,
+                            data.selectedCards[ii].shape,
+                            data.selectedCards[ii].number)
+        set.push(card);
+    }
+
+    var isSet = game.isSet(set);
+    console.log("Is this a set? " + isSet);
+
+    // TODO - need to get the board set_indices b/c we need to call Game.submitSet!
+
 }
