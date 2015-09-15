@@ -40,7 +40,15 @@ var ChatList = React.createClass({
     },
     getInitialState : function() {
         return {
-            chat_list : []
+            // chat_list : []
+            chat_list : [
+                { uname: "longlonglonglongunamecalledsocket", msg: "A Socket is the fundamental class for interacting with browser clients. A Socket belongs to a certain Namespace (by default /) and uses an underlying Client to communicate." },
+                { uname: "react", msg: "One of the many great parts of React is how it makes you think about apps as you build them. In this post, I'll walk you through the thought process of building a searchable product data table using React." },
+                { uname: "react", msg: 'If you look at ProductTable, you\'ll see that the table header (containing the "Name" and "Price" labels) isn\'t its own component. This is a matter of preference, and there\'s an argument to be made either way. For this example, I left it as part of ProductTable because it is part of rendering the data collection which is ProductTable\'s responsibility. However, if this header grows to be complex (i.e. if we were to add affordances for sorting), it would certainly make sense to make this its own ProductTableHeader component.' },
+                { uname: "react", msg: 'If you look at ProductTable, you\'ll see that the table header (containing the "Name" and "Price" labels) isn\'t its own component. This is a matter of preference, and there\'s an argument to be made either way. For this example, I left it as part of ProductTable because it is part of rendering the data collection which is ProductTable\'s responsibility. However, if this header grows to be complex (i.e. if we were to add affordances for sorting), it would certainly make sense to make this its own ProductTableHeader component.' },
+                { uname: "react", msg: 'If you look at ProductTable, you\'ll see that the table header (containing the "Name" and "Price" labels) isn\'t its own component. This is a matter of preference, and there\'s an argument to be made either way. For this example, I left it as part of ProductTable because it is part of rendering the data collection which is ProductTable\'s responsibility. However, if this header grows to be complex (i.e. if we were to add affordances for sorting), it would certainly make sense to make this its own ProductTableHeader component.' },
+                { uname: "react", msg: 'If you look at ProductTable, you\'ll see that the table header (containing the "Name" and "Price" labels) isn\'t its own component. This is a matter of preference, and there\'s an argument to be made either way. For this example, I left it as part of ProductTable because it is part of rendering the data collection which is ProductTable\'s responsibility. However, if this header grows to be complex (i.e. if we were to add affordances for sorting), it would certainly make sense to make this its own ProductTableHeader component.' },
+            ]
         };
     },
     componentDidMount : function() {
@@ -69,7 +77,7 @@ var ChatList = React.createClass({
         
         return (
             <div className="chat">
-                <ol>
+                <ol className="chat-list">
                     {chat_list}
                 </ol>
                 <form onSubmit={this.handleChatSubmit}>

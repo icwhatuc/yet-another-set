@@ -5,7 +5,9 @@
 
 .rooms-section {
     float: left;
-    width: 65%;
+    width: 60%;
+    margin-top: 2vh;
+    margin-left: 3vw;
 }
 
 ul.room-list {

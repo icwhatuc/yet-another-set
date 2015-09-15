@@ -30,14 +30,26 @@ var CardGallery = module.exports = React.createClass({
 	componentDidMount: function() {
 		var self = this;
 		socket.on(event_constants.UPDATE_BOARD, function (board) {
-			var cards_data = board.map(function(c) {
+			/*
+            var cards_data = board.map(function(c) {
 				return { color: card_map.color[c._color], shape: card_map.shape[c._shape], fill: card_map.fill[c._animation], number: c._number };
 			});
-			self.setState({data : cards_data});
+            */
+            for(var k = 0; k < board.length; k++)
+            {
+                var card = board[k];
+                card.color = card_map.color[card._color];
+                card.shape = card_map.shape[card._shape];
+                card.fill = card_map.fill[card._animation];
+                card.number = card._number;
+            }
+			self.setState({data : board});
 		});
-        socket.on(event_constants.USER_SUBMITS_SET, function (data) {
-            // data is a bool to say if it's a set or not
-            console.log(data);
+        
+        console.log("registering: ", event_constants.SET_SUBMISSION_RESULT);
+        socket.on(event_constants.SET_SUBMISSION_RESULT, function(is_set) {
+            console.log("IS SET? ", is_set);
+            if(!is_set) self.setState({ data : self.state.data });
         });
 	},
 	getRows: function() {
@@ -54,7 +66,7 @@ var CardGallery = module.exports = React.createClass({
 
     		for (var i = 0; i < row.length; i++) {
     			var card = row[i];
-    			cards.push( <Card color={card.color} shape={card.shape} fill={card.fill} number={card.number} />);
+    			cards.push( <Card color={card.color} shape={card.shape} fill={card.fill} number={card.number} index={card._index} />);
     		};
 
     		return (
@@ -73,37 +85,34 @@ var CardGallery = module.exports = React.createClass({
 	handleChildClick: function(e) {
 		e.preventDefault();
 		var className = e.target.className;
+        console.log(e);
+        console.log("SELECTED: ", className);
 		var selectHash = this.formSelectHash(className);
 		this.selectedCards.push(selectHash);
 
 		if (this.selectedCards.length === 3) {
 			//send info to server
-			console.log('this is three');
-            console.log(this.props);
-            console.log(this.selectedCards);
             var selectedCardsNumberForm = [];;
             for(var ii=0; ii<3; ++ii) // 3 cards in one set
             {
-                var selectedCardNumberForm = 
-                {
+                var selectedCardNumberForm =  {
                     color: card_num_map.color[this.selectedCards[ii].color],
                     fill: card_num_map.fill[this.selectedCards[ii].fill],
                     shape: card_num_map.shape[this.selectedCards[ii].shape], 
                     number: this.selectedCards[ii].number,
-                }
+                    index: this.selectedCards[ii].index,
+                    fake_key: 'some value',
+                };
                 selectedCardsNumberForm.push(selectedCardNumberForm);
             }
-            var data = 
-            {
+
+            var data = {
                 selectedCards: selectedCardsNumberForm,
                 gameId: this.props.id
-            }
+            };
+
             socket.emit(event_constants.USER_SUBMITS_SET, data);
         }
-		else {
-			console.log('restart');
-        }
-
 	},
 	formSelectHash: function(string) {
 		var classes = string.split(' ');
@@ -149,11 +158,11 @@ var Card = React.createClass({
 			numberText = 'three-item';
 		}
 
-		var classString = 'card ' + this.props.color + ' ' + this.props.fill + ' ' + this.props.shape + ' ' + numberText;
+		var classString = ['card', this.props.color, this.props.fill, this.props.shape, numberText].join(' ');
 
 		var itemDiv = [];
 		for (var i = 0; i < number; i++) {
-			itemDiv.push( <div className={classString}></div> );
+			itemDiv.push( <div className={classString} data-index={this.props.index}></div> );
 		}
 
 		return ( 
@@ -162,11 +171,13 @@ var Card = React.createClass({
 			</div>
 		)
 	},
-	childClick: function() {
+	childClick: function(e) {
 		if (this.state.selected == false)
 			this.setState({selected : true});
 		else
 			this.setState({selected : false});
+        
+        e.target = React.findDOMNode(this); // TODO: hack - the target can be the card or one of the sub divs in the card but need the target to be a card
 	},
 	render: function() {
 		var classString = 'card-block';
@@ -180,6 +191,5 @@ var Card = React.createClass({
 	        </div>
         );
     }
-
 });
 

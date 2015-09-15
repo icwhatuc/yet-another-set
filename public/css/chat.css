@@ -1,4 +1,17 @@
 .chat {
-    width: 33%;
+    width: 30%;
+    height: 100vh;
     float: right;
+    margin-right: 3vw;
 }
+
+ol.chat-list {
+    list-style-type: none;
+    height: 80vh;
+    overflow: hidden;
+}
+
+ol.chat-list li {
+    margin-top: 10px;
+}
+

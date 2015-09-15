@@ -1,0 +1,2 @@
+- click handler only works as intended on the cards
+- server needs to respond and FE needs to accept whether set was good or not
