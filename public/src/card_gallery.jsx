@@ -35,6 +35,7 @@ var CardGallery = module.exports = React.createClass({
 				return { color: card_map.color[c._color], shape: card_map.shape[c._shape], fill: card_map.fill[c._animation], number: c._number };
 			});
             */
+            console.log(board);
             for(var k = 0; k < board.length; k++)
             {
                 var card = board[k];
@@ -88,11 +89,13 @@ var CardGallery = module.exports = React.createClass({
         console.log(e);
         console.log("SELECTED: ", className);
 		var selectHash = this.formSelectHash(className);
+        console.log(selectHash);
 		this.selectedCards.push(selectHash);
 
 		if (this.selectedCards.length === 3) {
 			//send info to server
-            var selectedCardsNumberForm = [];;
+            var selectedCardsNumberForm = [];
+            var selectedCardsIndices = [];
             for(var ii=0; ii<3; ++ii) // 3 cards in one set
             {
                 var selectedCardNumberForm =  {
@@ -104,10 +107,14 @@ var CardGallery = module.exports = React.createClass({
                     fake_key: 'some value',
                 };
                 selectedCardsNumberForm.push(selectedCardNumberForm);
+                selectedCardsIndices.push(this.selectedCards[ii].index);
             }
+
+            console.log(selectedCardsNumberForm);
 
             var data = {
                 selectedCards: selectedCardsNumberForm,
+                indices:selectedCardsIndices,
                 gameId: this.props.id
             };
 
