@@ -56,7 +56,15 @@ GameEvents.prototype.set_submission_handler = function(socket, data) {
     var isSet = game.isSet(set);
     console.log("Is this a set? " + isSet);
 
+    var checkSet = game.checkSet(data.indices);
+
+    console.log("Actual check set " + checkSet);
+
+    game.submitSet(data.indices);
+
     // TODO - need to get the board set_indices b/c we need to call Game.submitSet!
     socket.emit(event_constants.SET_SUBMISSION_RESULT, false);
     socket.to(data.gameId).emit(event_constants.SET_SUBMISSION_RESULT, false);
+    socket.emit(event_constants.UPDATE_BOARD, game.board());
+    socket.to(event_constants.UPDATE_BOARD, game.board());
 }
