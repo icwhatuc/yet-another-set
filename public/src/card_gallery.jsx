@@ -86,8 +86,6 @@ var CardGallery = module.exports = React.createClass({
 	handleChildClick: function(e) {
 		e.preventDefault();
 		var className = e.target.className;
-        console.log(e);
-        console.log("SELECTED: ", className);
 		var selectHash = this.formSelectHash(className);
         console.log(selectHash);
 		this.selectedCards.push(selectHash);
@@ -129,6 +127,7 @@ var CardGallery = module.exports = React.createClass({
 		hash['color'] = classes[0];
 		hash['fill'] = classes[1];
 		hash['shape'] = classes[2];
+        hash['index'] = classes[4].substring(6);
 
 		if (classes[3] == 'one-item')
 			hash['number'] = 1;
@@ -165,15 +164,16 @@ var Card = React.createClass({
 			numberText = 'three-item';
 		}
 
-		var classString = ['card', this.props.color, this.props.fill, this.props.shape, numberText].join(' ');
+		var indexString = "index-" + this.props.index;
+        var classString = ['card', this.props.color, this.props.fill, this.props.shape, numberText, indexString].join(' ');
 
 		var itemDiv = [];
 		for (var i = 0; i < number; i++) {
-			itemDiv.push( <div className={classString} data-index={this.props.index}></div> );
+			itemDiv.push( <div className={classString} data-index={this.props.index} ref={this.props.index + '-' + i.toString()} ></div> );
 		}
 
 		return ( 
-			<div className="centercolumn">
+			<div className="centercolumn" data-child-classes={classString} >
 				{itemDiv}
 			</div>
 		)
@@ -184,7 +184,7 @@ var Card = React.createClass({
 		else
 			this.setState({selected : false});
         
-        e.target = React.findDOMNode(this); // TODO: hack - the target can be the card or one of the sub divs in the card but need the target to be a card
+        e.target = React.findDOMNode(this.refs[this.props.index.toString() + '-0']); // React.Children.only(this.props.children); // TODO: hack - the target can be the card or one of the sub divs in the card but need the target to be a card
 	},
 	render: function() {
 		var classString = 'card-block';
@@ -193,7 +193,7 @@ var Card = React.createClass({
 			classString += ' ' + 'selected';
 
         return (
-        	<div className={classString} onClick={this.childClick}>
+        	<div className={classString} onClick={this.childClick} data-child-ref={this.props.index}>
 	            {this.numberSetUp()}
 	        </div>
         );
