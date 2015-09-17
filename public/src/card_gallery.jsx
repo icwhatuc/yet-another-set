@@ -32,7 +32,7 @@ var CardGallery = module.exports = React.createClass({
 		socket.on(event_constants.UPDATE_BOARD, function (board) {
 			/*
             var cards_data = board.map(function(c) {
-				return { color: card_map.color[c._color], shape: card_map.shape[c._shape], fill: card_map.fill[c._animation], number: c._number };
+				return { color: card_map.color[c._color], shape: card_map.shape[c._shape], fill: card_map.fill[c._fill], number: c._number };
 			});
             */
             console.log(board);
@@ -41,7 +41,7 @@ var CardGallery = module.exports = React.createClass({
                 var card = board[k];
                 card.color = card_map.color[card._color];
                 card.shape = card_map.shape[card._shape];
-                card.fill = card_map.fill[card._animation];
+                card.fill = card_map.fill[card._fill];
                 card.number = card._number;
             }
 			self.setState({data : board});

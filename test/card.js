@@ -7,13 +7,13 @@ describe('Card', function() {
     var extra_card_2;
     describe('constructor', function() {
         it('should create a card object', function(done) {
-            card = new Card(CLUB, BLUE, ROTATE, 2);
+            card = new Card(CLUB, BLUE, EMPTY, 2);
             
             expect(card.constructor.name).to.equal('Card');
             expect(card.shape()).to.equal(CLUB);
             expect(card.color()).to.equal(BLUE);
             expect(card.number()).to.equal(2);
-            expect(card.animation()).to.equal(ROTATE);
+            expect(card.fill()).to.equal(EMPTY);
             done();
         });
 
@@ -24,13 +24,13 @@ describe('Card', function() {
 
     describe('equals', function() {
         it('should return true for an identical card object', function(done) {
-            extra_card_1 = new Card(CLUB, BLUE, ROTATE, 2);
+            extra_card_1 = new Card(CLUB, BLUE, EMPTY, 2);
             expect(card.equals(extra_card_1)).to.be.true;
             done();
         });
 
         it('should return false for an card object that is not identical', function(done) {
-            extra_card_2 = new Card(SPADE, BLUE, SHAKE, 3);
+            extra_card_2 = new Card(SPADE, BLUE, SOLID, 3);
             expect(card.equals(extra_card_2)).to.be.false;
             done();
         });
