@@ -11,6 +11,12 @@ var Login = module.exports = React.createClass({
             <div id="login">
                 <form className="login-form" onSubmit={this.handleLoginSubmit}>
                     <input id="uname" ref="uname" autoComplete="off" placeholder="Enter a nickname"/>
+                    <button className="ui vertical animated primary login button" tabIndex="0">
+                        <div className="hidden content">Go!</div>
+                        <div className="visible content">
+                            <i className="sign in icon"></i>
+                        </div>
+                    </button>
                 </form>
             </div>
         );
