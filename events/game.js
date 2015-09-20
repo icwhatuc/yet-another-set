@@ -29,6 +29,8 @@ GameEvents.prototype.user_enters_handler = function(socket, gameId) {
     // LobbyEventsObj.get_all_rooms_handler(socket);
     
     // start the game if necessary & let everyone know about he game board
+    var game = gm.getGameByID(gameId);
+    
 
     socket.emit(event_constants.UPDATE_BOARD, game.board());
 }
@@ -59,18 +61,17 @@ GameEvents.prototype.set_submission_handler = function(socket, data) {
         set.push(card);
     }
 
-    var isSet = game.isSet(set);
-    console.log("Is this a set? " + isSet);
-
     var checkSet = game.checkSet(data.indices);
 
     console.log("Actual check set " + checkSet);
 
     game.submitSet(data.indices);
 
+    console.log("GAMEID", data.gameId);
+
     // TODO - need to get the board set_indices b/c we need to call Game.submitSet!
-    socket.emit(event_constants.SET_SUBMISSION_RESULT, false);
-    socket.to(data.gameId).emit(event_constants.SET_SUBMISSION_RESULT, false);
+    socket.emit(event_constants.SET_SUBMISSION_RESULT, checkSet);
+    socket.to(data.gameId).emit(event_constants.SET_SUBMISSION_RESULT, checkSet);
     socket.emit(event_constants.UPDATE_BOARD, game.board());
-    socket.to(event_constants.UPDATE_BOARD, game.board());
+    socket.to(data.gameId).emit(event_constants.UPDATE_BOARD, game.board());
 }
