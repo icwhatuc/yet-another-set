@@ -3,6 +3,8 @@ var User = require('../lib/User.js');
 var Lobby = require('../lib/Lobby.js');
 var Game = require('../lib/Game.js');
 var Card = require('../lib/Card.js');
+var LobbyEvents = require('./lobby.js');
+var LobbyEventsObj = new LobbyEvents();
 
 function GameEvents() {}
 
@@ -18,11 +20,15 @@ GameEvents.prototype.group_events = function() {
 }
 
 GameEvents.prototype.user_enters_handler = function(socket, gameId) {
+    var user = socket.user;
     // data will have the game id
-    // add the user to the game
-    // notify everyone in the game that the user joined
-    // start the game if necessary & let everyone know about he game board
     var game = gm.getGameByID(gameId);
+    // add the user to the game
+    game.addUser(socket.user);
+    // notify everyone in the lobby that the user left and entered a game
+    // LobbyEventsObj.get_all_rooms_handler(socket);
+    
+    // start the game if necessary & let everyone know about he game board
 
     socket.emit(event_constants.UPDATE_BOARD, game.board());
 }

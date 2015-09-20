@@ -45,11 +45,11 @@ LobbyEvents.prototype.get_all_rooms_handler = function(socket) {
             roomID: game._id,
             roomName: game._name,
             roomDescription: game._desc,
-            connectedPlayers: 777, // TODO,
+            connectedPlayers: game.userCount(), // TODO,
             capacity: game._size
         }
         data.push(room);
     }
-    socket.broadcast.emit(event_constants.GET_ALL_ROOMS, data);
+    socket.to('lobby').emit(event_constants.GET_ALL_ROOMS, data);
     socket.emit(event_constants.GET_ALL_ROOMS, data);
 } 

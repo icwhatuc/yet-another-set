@@ -44,6 +44,15 @@ var Message = React.createClass({
             );
         }
 
+        if(this.props.type === event_constants.SYSTEM_MESSAGE)
+        {
+            return (
+                <div className="system-message">
+                    {this.state.msg}
+                </div>
+            );
+        }
+
         var avatarURL = this.state.uname == 'mihir' ? 
             'https://avatars0.githubusercontent.com/u/4442378?v=3&s=50' :
             'http://api.adorable.io/avatars/50/' + this.state.uname;

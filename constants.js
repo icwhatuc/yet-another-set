@@ -4,6 +4,7 @@ module.exports = {
         USER_ENTERS : 'user enters',
         USER_SPEAKS : 'user speaks',
         USER_LEAVES : 'user exits',
+        SYSTEM_MESSAGE : 'system msg',
         
         // lobby
         NEW_USER    : 'new user',

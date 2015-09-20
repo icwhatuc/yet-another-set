@@ -27,13 +27,10 @@ var Room = React.createClass({
 
 var RoomList = module.exports = React.createClass({
     createRoomEventHandler : function(data) {
-        console.log("createRoomEventHandler");
-        console.log(data);
         var self = this;
         var cl = self.state.room_list;
         cl.push(data);
         self.setState({room_list : cl}); // auto calls renders
-        console.log("finishcreateRoomEventHandler");
     },
     getAllRoomsEventHandler : function(data) {
         // get all rooms and put it in the room_list
@@ -42,7 +39,6 @@ var RoomList = module.exports = React.createClass({
         self.setState({room_list : data});
     },
     getInitialState : function() {
-        console.log("Get initial state called!");
         return {
             room_list : [
                 {roomName: 'a', roomCapacity : 5, roomID: 1000},
