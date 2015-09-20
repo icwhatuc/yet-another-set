@@ -17,7 +17,8 @@ var Message = React.createClass({
             self.setState({
                 uname: self.props.uname,
                 timestamp: self.props.timestamp,
-                msg : self.props.msg
+                msg : self.props.msg,
+                type: self.props.type,
             });
         }
 
