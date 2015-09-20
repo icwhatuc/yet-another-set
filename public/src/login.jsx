@@ -2,21 +2,24 @@ var Login = module.exports = React.createClass({
     mixins : [Navigation],
     handleLoginSubmit : function(e) {
         e.preventDefault();
-        var uname = React.findDOMNode(this.refs.uname).value.trim();
-        socket.emit('new user', uname);
-        this.transitionTo('lobby', null, { uname : uname });
+        username = React.findDOMNode(this.refs.uname).value.trim(); // btw, username is global (app.jsx)
+        socket.emit('new user', username);
+        this.transitionTo('lobby', null, { uname : username });
     },
     render : function() {
         return (
             <div id="login">
                 <form className="login-form" onSubmit={this.handleLoginSubmit}>
-                    <input id="uname" ref="uname" autoComplete="off" placeholder="Enter a nickname"/>
-                    <button className="ui vertical animated primary login button" tabIndex="0">
-                        <div className="hidden content">Go!</div>
-                        <div className="visible content">
-                            <i className="sign in icon"></i>
-                        </div>
-                    </button>
+                    <div className="ui inverted large left icon action input">
+                        <i className="user icon"></i>
+                        <input type="text" id="uname" ref="uname" autoComplete="off" placeholder="Name"/>
+                        <button className="ui vertical animated primary login button">
+                            <div className="hidden content">Set!</div>
+                            <div className="visible content">
+                                <i className="sign in icon"></i>
+                            </div>
+                        </button>
+                    </div>
                 </form>
             </div>
         );

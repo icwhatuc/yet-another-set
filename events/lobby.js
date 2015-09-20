@@ -25,25 +25,26 @@ LobbyEvents.prototype.new_user_handler = function(socket, name) {
 
 LobbyEvents.prototype.room_created_handler = function(socket, data) {
     var self = this;
+    var user = socket.user;
     var newGame = data;
-    gm.createGame(newGame.roomName, newGame.capacity); // roomId modified in here!
-    data = { roomID: roomId,
-             roomName: newGame.roomName, 
-             connectedPlayers: newGame.connectedPlayers,
-             capacity: newGame.capacity};
-    socket.broadcast.emit(event_constants.ROOM_CREATED, data);
+    
+    console.log("Creating a new room: " + newGame.roomName);
+
+    gm.createGame(newGame.roomName, newGame.roomDescription, newGame.capacity);
+
+    self.get_all_rooms_handler(socket);
 }
 
-LobbyEvents.prototype.get_all_rooms_handler = function(socket, data) {
+LobbyEvents.prototype.get_all_rooms_handler = function(socket) {
     var self = this;
-    // data is useless; no need to use it
     var data = [];
     for (var key in gm._games)
     {
         var game = gm._games[key];
         var room = {
             roomID: game._id,
-            roomName: key,
+            roomName: game._name,
+            roomDescription: game._desc,
             connectedPlayers: 777, // TODO,
             capacity: game._size
         }

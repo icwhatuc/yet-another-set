@@ -12,10 +12,17 @@ var Game = module.exports = React.createClass({
     },
     render : function() {
         return (
-            <div id="game">
-                <Link className="lobby-link" to="lobby">Go back to Lobby</Link>
-                <CardGallery id={this.props.params.id}/>
-                <ChatList id={this.props.params.id}/>
+            <div className="ui game segment">
+                <div className="ui grid">
+                    <div className="eleven wide column">
+                        <Link className="lobby-link" to="lobby">Go back to Lobby</Link>
+                        <CardGallery id={this.props.params.id}/>
+                    </div>
+                    <div className="ui vertical divider">
+                        <i className="comments outline icon"></i>
+                    </div>
+                    <ChatList id={this.props.params.id}/>
+                </div>
             </div>
         );
     },

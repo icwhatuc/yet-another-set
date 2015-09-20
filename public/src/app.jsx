@@ -5,6 +5,7 @@ global.Route = Router.Route;
 global.RouteHandler = Router.RouteHandler;
 global.Link = Router.Link;
 global.Navigation = Router.Navigation;
+global.username = '';
 
 var Login = require('./login.jsx');
 var Lobby = require('./lobby.jsx');

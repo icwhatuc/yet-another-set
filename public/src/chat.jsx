@@ -1,31 +1,44 @@
 var BUFFER_SIZE = 100;
 var event_constants = require('./constants.js').event_constants;
+var date_prettifier = require('pretty-date');
 
 var Message = React.createClass({
     render : function() {
         if(this.props.type === event_constants.USER_ENTERS)
         {
             return (
-                <li className="user-enters">
+                <div className="user-enters">
                     <span className="uname">{this.props.uname}</span> has entered the room.
-                </li>
+                </div>
             );
         }
         
         if(this.props.type === event_constants.USER_LEAVES)
         {
             return (
-                <li className="user-exits">
+                <div className="user-exits">
                     <span className="uname">{this.props.uname}</span> has left the room.
-                </li>
+                </div>
             );
         }
 
+        var avatarURL = this.props.uname == 'mihir' ? 
+            'https://avatars0.githubusercontent.com/u/4442378?v=3&s=50' :
+            'http://api.adorable.io/avatars/50/' + this.props.uname;
+
         return (
-            <li className="chat-msg">
-                <span className="uname">{this.props.uname}</span>
-                : {this.props.msg}
-            </li>
+            <div className="comment">
+                <a className="avatar"><img src={avatarURL}/></a>
+                <div className="content">
+                    <a className="author">{this.props.uname}</a>
+                    <div className="metadata">
+                        <span className="date">{date_prettifier.format(new Date( new Date() - 1*1000 ))}</span>
+                    </div>
+                    <div className="text">
+                        {this.props.msg}
+                    </div>
+                </div>
+            </div>
         );
     },
 });
@@ -42,14 +55,15 @@ var ChatList = React.createClass({
         return {
             // chat_list : []
             chat_list : [
-                { uname: "longlonglonglongunamecalledsocket", msg: "A Socket is the fundamental class for interacting with browser clients. A Socket belongs to a certain Namespace (by default /) and uses an underlying Client to communicate." },
-                { uname: "react", msg: "One of the many great parts of React is how it makes you think about apps as you build them. In this post, I'll walk you through the thought process of building a searchable product data table using React." },
-                { uname: "react", msg: 'If you look at ProductTable, you\'ll see that the table header (containing the "Name" and "Price" labels) isn\'t its own component. This is a matter of preference, and there\'s an argument to be made either way. For this example, I left it as part of ProductTable because it is part of rendering the data collection which is ProductTable\'s responsibility. However, if this header grows to be complex (i.e. if we were to add affordances for sorting), it would certainly make sense to make this its own ProductTableHeader component.' },
-                { uname: "react", msg: 'If you look at ProductTable, you\'ll see that the table header (containing the "Name" and "Price" labels) isn\'t its own component. This is a matter of preference, and there\'s an argument to be made either way. For this example, I left it as part of ProductTable because it is part of rendering the data collection which is ProductTable\'s responsibility. However, if this header grows to be complex (i.e. if we were to add affordances for sorting), it would certainly make sense to make this its own ProductTableHeader component.' },
-                { uname: "react", msg: 'If you look at ProductTable, you\'ll see that the table header (containing the "Name" and "Price" labels) isn\'t its own component. This is a matter of preference, and there\'s an argument to be made either way. For this example, I left it as part of ProductTable because it is part of rendering the data collection which is ProductTable\'s responsibility. However, if this header grows to be complex (i.e. if we were to add affordances for sorting), it would certainly make sense to make this its own ProductTableHeader component.' },
-                { uname: "react", msg: 'If you look at ProductTable, you\'ll see that the table header (containing the "Name" and "Price" labels) isn\'t its own component. This is a matter of preference, and there\'s an argument to be made either way. For this example, I left it as part of ProductTable because it is part of rendering the data collection which is ProductTable\'s responsibility. However, if this header grows to be complex (i.e. if we were to add affordances for sorting), it would certainly make sense to make this its own ProductTableHeader component.' },
             ]
         };
+    },
+    scrollChat : function() {
+        var self = this;
+        window.requestAnimationFrame(function() {
+            var node = $('.ui.comments')[0];
+            node.scrollTop = node.scrollHeight;
+        });
     },
     componentDidMount : function() {
         var self = this;
@@ -59,6 +73,12 @@ var ChatList = React.createClass({
         socket.on(event_constants.USER_ENTERS, self.genericEventHandler);
         socket.on(event_constants.USER_LEAVES, self.genericEventHandler);
         socket.on(event_constants.USER_SPEAKS, self.genericEventHandler);
+
+        self.scrollChat();
+    },
+    componentDidUpdate : function() {
+        var self = this;
+        self.scrollChat();
     },
     handleChatSubmit : function(e) {
         var msg = React.findDOMNode(this.refs.msg).value.trim();
@@ -76,12 +96,17 @@ var ChatList = React.createClass({
         });
         
         return (
-            <div className="chat">
-                <ol className="chat-list">
+            <div className="five wide column">
+                <div className="ui comments">
                     {chat_list}
-                </ol>
-                <form onSubmit={this.handleChatSubmit}>
-                    <input ref="msg" autoComplete="off" placeholder="Say something..."/>
+                </div>
+                <form onSubmit={this.handleChatSubmit} className="ui large form">
+                    <div className="field">
+                        <div className="ui inverted left icon input">
+                            <i className="comment outline icon"></i>
+                            <input ref="msg" type="text" autoComplete="off" placeholder="Say something..."/>
+                        </div>
+                    </div>
                 </form>
             </div>
         );

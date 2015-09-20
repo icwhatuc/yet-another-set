@@ -3,7 +3,7 @@
     height: 100%;
 }
 
-.login.button {
+._login.button {
     margin-left: 10px;
     margin-bottom: 10px;
 }
@@ -15,7 +15,7 @@
     text-align: center;
 }
 
-#uname {
+#_uname {
     background-color: transparent;
     color: #ffffff;
     font-size: 200%;

@@ -1,17 +1,9 @@
-.chat {
-    width: 30%;
-    height: 100vh;
-    float: right;
-    margin-right: 3vw;
+.ui.comments {
+    height: 83vh;
+    overflow-y: scroll;
 }
 
-ol.chat-list {
-    list-style-type: none;
-    height: 80vh;
-    overflow: hidden;
-}
-
-ol.chat-list li {
-    margin-top: 10px;
+.comments::-webkit-scrollbar {
+    display: none;
 }
 

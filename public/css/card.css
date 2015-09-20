@@ -1,6 +1,6 @@
 .card-gallery {
-    height: 100%;
-    width: 65%;
+    margin-left: auto;
+    margin-right: auto;
     float: left;
 }
 
@@ -16,7 +16,7 @@
     position: relative;
     width: 100px;
     height: 150px;
-    border-radius: 20px;
+    border-radius: 10px;
     background: #fff;
     -webkit-box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
     box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
@@ -33,10 +33,10 @@
 .striped{
     -webkit-background-clip: text;
     color: transparent !important;
-    background-image: -webkit-linear-gradient(rgba(255, 255, 255, .5) 50%, transparent 50%, transparent);
-    background-image: -moz-linear-gradient(rgba(255, 255, 255, .5) 50%, transparent 50%, transparent);
-    background-image: -o-linear-gradient(rgba(255, 255, 255, .5) 50%, transparent 50%, transparent);
-    background-image: linear-gradient(rgba(255, 255, 255, .5) 50%, transparent 50%, transparent);
+    background-image: -webkit-linear-gradient(rgba(255, 255, 255, 1) 30%, transparent 50%, transparent);
+    background-image: -moz-linear-gradient(rgba(255, 255, 255, 1) 30%, transparent 50%, transparent);
+    background-image: -o-linear-gradient(rgba(255, 255, 255, 1) 30%, transparent 50%, transparent);
+    background-image: linear-gradient(rgba(255, 255, 255, 1) 30%, transparent 50%, transparent);
 }
 
 .striped.red {
@@ -44,11 +44,11 @@
 }
 
 .striped.blue {
-    background-color: #00969a;
+    background-color: #00769a;
 }
 
 .striped.green {
-    background-color: #44c782;
+    background-color: #44c752;
 }
 
 .empty {
