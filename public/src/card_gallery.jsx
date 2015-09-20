@@ -24,7 +24,6 @@ var card_num_map = {
 var CardGallery = module.exports = React.createClass({
 	getInitialState : function() {
 		this.selectedCards = [];
-		this.selectedClassNames = [];
 
 		return { data : cards_data.slice(0) };
 	},
@@ -122,9 +121,9 @@ var CardGallery = module.exports = React.createClass({
                 gameId: this.props.id
             };
 
-            this.selectedCards = [];
-
             socket.emit(event_constants.USER_SUBMITS_SET, data);
+
+            this.setState({selectedCards : []});
         }
 	},
 	formSelectHash: function(string) {
@@ -187,7 +186,6 @@ var Card = React.createClass({
 		)
 	},
 	childClick: function(e) {
-		console.log(this.state.selected);
 		if (this.state.selected == false)
 			this.setState({selected : true});
 		else
