@@ -23,9 +23,7 @@ var card_num_map = {
 
 var CardGallery = module.exports = React.createClass({
 	getInitialState : function() {
-		this.selectedCards = [];
-
-		return { data : cards_data.slice(0) };
+		return { data : cards_data.slice(0), selectedCards : [] };
 	},
 	componentDidMount: function() {
 		var self = this;
@@ -43,7 +41,6 @@ var CardGallery = module.exports = React.createClass({
                 card.shape = card_map.shape[card._shape];
                 card.fill = card_map.fill[card._fill];
                 card.number = card._number;
-                card.selected = false;
             }
 			self.setState({data : board});
 		});
@@ -91,28 +88,28 @@ var CardGallery = module.exports = React.createClass({
 
 		var found = 0;
 
-		for (var i = 0; i < this.selectedCards.length; i++) {
-			if (this.selectedCards[i].index == selectHash.index) {
-				this.selectedCards.splice(i, 1);
+		for (var i = 0; i < this.state.selectedCards.length; i++) {
+			if (this.state.selectedCards[i].index == selectHash.index) {
+				this.state.selectedCards.splice(i, 1);
 				found = 1;
 			}
 		}
 
 		if (!found) {
-			this.selectedCards.push(selectHash);
+			this.state.selectedCards.push(selectHash);
 		}
 
-		if (this.selectedCards.length === 3) {
+		if (this.state.selectedCards.length === 3) {
 			//send info to server
             var selectedCardsNumberForm = [];
             var selectedCardsIndices = [];
             for(var ii=0; ii<3; ++ii) // 3 cards in one set
             {
                 var selectedCardNumberForm =  {
-                    index: this.selectedCards[ii].index
+                    index: this.state.selectedCards[ii].index
                 };
                 selectedCardsNumberForm.push(selectedCardNumberForm);
-                selectedCardsIndices.push(this.selectedCards[ii].index);
+                selectedCardsIndices.push(this.state.selectedCards[ii].index);
             }
 
             var data = {
@@ -158,6 +155,9 @@ var Card = React.createClass({
 	getInitialState: function() {
 		return { selected : false};
 	},
+	componentWillReceiveProps: function() {
+		this.setState({ selected : false });
+	},
 	numberSetUp: function() {
 		var number = this.props.number;
 
@@ -186,21 +186,21 @@ var Card = React.createClass({
 		)
 	},
 	childClick: function(e) {
-		if (this.state.selected == false)
-			this.setState({selected : true});
+		if (this.state.selected === false)
+			this.setState({ selected : true });
 		else
-			this.setState({selected : false});
+			this.setState({ selected : false });
 
         e.target = React.findDOMNode(this.refs[this.props.index.toString() + '-0']); // React.Children.only(this.props.children); // TODO: hack - the target can be the card or one of the sub divs in the card but need the target to be a card
 	},
 	render: function() {
 		var classString = 'card-block';
 
-		if (this.state.selected)
+		if (this.state.selected == true)
 			classString += ' ' + 'selected';
 
         return (
-        	<div className={classString} onClick={this.childClick} data-child-ref={this.props.index}>
+        	<div className={classString} onClick={this.childClick}>
 	            {this.numberSetUp()}
 	        </div>
         );
