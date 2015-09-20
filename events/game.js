@@ -23,6 +23,13 @@ GameEvents.prototype.user_enters_handler = function(socket, gameId) {
     var user = socket.user;
     // data will have the game id
     var game = gm.getGameByID(gameId);
+    // add the user to the game
+    game.addUser(socket.user);
+    // notify everyone in the lobby that the user left and entered a game
+    // LobbyEventsObj.get_all_rooms_handler(socket);
+    
+    // start the game if necessary & let everyone know about he game board
+    var game = gm.getGameByID(gameId);
     
     socket.emit(event_constants.UPDATE_BOARD, game.board());
 }
