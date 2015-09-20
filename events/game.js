@@ -23,6 +23,8 @@ GameEvents.prototype.user_enters_handler = function(socket, gameId) {
     // notify everyone in the game that the user joined
     // start the game if necessary & let everyone know about he game board
     var game = gm.getGameByID(gameId);
+    
+//    game.addUser("chris");
 
     socket.emit(event_constants.UPDATE_BOARD, game.board());
 }
@@ -63,8 +65,8 @@ GameEvents.prototype.set_submission_handler = function(socket, data) {
     game.submitSet(data.indices);
 
     // TODO - need to get the board set_indices b/c we need to call Game.submitSet!
-    socket.emit(event_constants.SET_SUBMISSION_RESULT, false);
-    socket.to(data.gameId).emit(event_constants.SET_SUBMISSION_RESULT, false);
+    socket.emit(event_constants.SET_SUBMISSION_RESULT, isSet);
+    socket.to(data.gameId).emit(event_constants.SET_SUBMISSION_RESULT, isSet);
     socket.emit(event_constants.UPDATE_BOARD, game.board());
     socket.to(event_constants.UPDATE_BOARD, game.board());
 }
