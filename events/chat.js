@@ -31,7 +31,12 @@ ChatEvents.prototype.user_speech_handler = function(socket, data) {
     var self = this;
     var user = socket.user;
     if(!user) return;
-    data = { msg: data, uname: user.name(), type: event_constants.USER_SPEAKS };
+    data = {
+        msg: data,
+        uname: user.name(),
+        type: event_constants.USER_SPEAKS,
+        timestamp: new Date()
+    };
     socket.emit(event_constants.USER_SPEAKS, data);
     socket.to(user.room()).emit(event_constants.USER_SPEAKS, data);
 }
