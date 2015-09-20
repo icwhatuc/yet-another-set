@@ -69,6 +69,12 @@ GameEvents.prototype.set_submission_handler = function(socket, data) {
 
     console.log("GAMEID", data.gameId);
 
+    if(checkSet)
+    {
+        game.addPoint(socket.user);
+    }
+    game.printPoints();
+
     // TODO - need to get the board set_indices b/c we need to call Game.submitSet!
     socket.emit(event_constants.SET_SUBMISSION_RESULT, checkSet);
     socket.to(data.gameId).emit(event_constants.SET_SUBMISSION_RESULT, checkSet);
