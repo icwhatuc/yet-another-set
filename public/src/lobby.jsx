@@ -4,28 +4,41 @@ var LOBBY_CHAT_ID = 'lobby';
 
 var Room = React.createClass({
     render : function() {
+        var numOfPlayers = parseInt(this.props.connectedPlayers.toString(), 10);
+        var roomSize = parseInt(this.props.capacity.toString(), 10);
+        var isFull = numOfPlayers >= roomSize;
+
+        var roomInfo = (
+            <div className="ui grid">
+                <div className="room-name eight wide column">
+                    <div className="room-name">
+                        <strong>{this.props.roomName}</strong>
+                    </div>
+                    <div className="room-desc">
+                        {this.props.roomDescription}
+                    </div>
+                </div>
+                <div className="room-players four wide column">{this.props.connectedPlayers}</div>
+                <div className="room-capacity four wide column">{this.props.capacity}</div>
+            </div>
+        );
+
+        roomInfo = isFull ? roomInfo : (
+            <Link to="game" params={{id: this.props.roomID}}>
+                {roomInfo}
+            </Link>
+        );
+
         return (
             <li className="room">
-                <Link to="game" params={{id: this.props.roomID}}>
-                    <div className="ui grid">
-                        <div className="room-name eight wide column">
-                            <div className="room-name">
-                                <strong>{this.props.roomName}</strong>
-                            </div>
-                            <div className="room-desc">
-                                {this.props.roomDescription}
-                            </div>
-                        </div>
-                        <div className="room-players four wide column">{this.props.connectedPlayers}</div>
-                        <div className="room-capacity four wide column">{this.props.capacity}</div>
-                    </div>
-                </Link>
+                {roomInfo}
             </li>
         );
     },
 });
 
 var RoomList = module.exports = React.createClass({
+    mixins : [Navigation],
     createRoomEventHandler : function(data) {
         var self = this;
         var cl = self.state.room_list;
@@ -41,9 +54,11 @@ var RoomList = module.exports = React.createClass({
     getInitialState : function() {
         return {
             room_list : [
-                {roomName: 'a', roomCapacity : 5, roomID: 1000},
             ]
         };
+    },
+    roomTransitionHandler : function(roomId) {
+        this.transitionTo('game', { id : roomId });
     },
     componentDidMount : function() {
         var self = this;
@@ -111,6 +126,7 @@ var RoomList = module.exports = React.createClass({
 });
 
 var ModalForm = React.createClass({
+    mixins : [Navigation],
     componentDidMount : function() {
         var self = this;
         $('#size').numeric();
@@ -125,17 +141,13 @@ var ModalForm = React.createClass({
         var self = this;
         var roomName = React.findDOMNode(this.refs.roomName).value.trim();
         var roomDescription = React.findDOMNode(this.refs.roomDescription).value.trim();
-        var roomCapacity = React.findDOMNode(this.refs.roomCapacity).value.trim();
+        var roomCapacity = parseInt(React.findDOMNode(this.refs.roomCapacity).value.trim(), 10);
         var newRoom = {
             roomName: roomName,
             roomDescription: roomDescription,
             connectedPlayers: 1,
             capacity: roomCapacity,
         };
-        
-        console.log(newRoom);
-
-        console.log("Emitting " + event_constants.ROOM_CREATED);
         socket.emit(event_constants.ROOM_CREATED, newRoom);
     },
     render: function() {

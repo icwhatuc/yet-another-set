@@ -41,7 +41,11 @@ li.room, li.room-list-header {
   margin-top: 10px;
   margin-bottom: 10px;
 }
- 
+
+li.room {
+    color: #777;
+}
+
 li.room:last-child {
   border: none;
 }

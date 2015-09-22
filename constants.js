@@ -10,6 +10,7 @@ module.exports = {
         NEW_USER    : 'new user',
         ENTER_LOBBY : 'enter lobby',
         ROOM_CREATED: 'room created',
+        PERSONAL_ROOM_CREATED: 'personal room created',
         ROOM_STARTED: 'room started',
         ROOM_USER_ENTERED: 'room user entered',
         GET_ALL_ROOMS: 'get all rooms',

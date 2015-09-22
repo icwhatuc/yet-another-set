@@ -53,11 +53,10 @@ LobbyEvents.prototype.room_created_handler = function(socket, data) {
     var user = socket.user;
     var newGame = data;
     
-    console.log("Creating a new room: " + newGame.roomName);
+    var game = gm.createGame(newGame.roomName, newGame.roomDescription, newGame.capacity);
 
-    gm.createGame(newGame.roomName, newGame.roomDescription, newGame.capacity);
-
-    self.get_all_rooms_handler(socket);
+    if(newGame.capacity == 1) socket.emit(event_constants.PERSONAL_ROOM_CREATED, game._id);
+    else self.get_all_rooms_handler(socket);
 }
 
 LobbyEvents.prototype.get_all_rooms_handler = function(socket) {
