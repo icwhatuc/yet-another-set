@@ -8,6 +8,7 @@ module.exports = {
         
         // lobby
         NEW_USER    : 'new user',
+        ENTER_LOBBY : 'enter lobby',
         ROOM_CREATED: 'room created',
         ROOM_STARTED: 'room started',
         ROOM_USER_ENTERED: 'room user entered',

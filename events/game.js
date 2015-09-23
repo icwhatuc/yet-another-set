@@ -5,6 +5,7 @@ var Game = require('../lib/Game.js');
 var Card = require('../lib/Card.js');
 var LobbyEvents = require('./lobby.js');
 var LobbyEventsObj = new LobbyEvents();
+var sprintf = require('sprintf-js').sprintf;
 
 function GameEvents() {}
 
@@ -14,14 +15,12 @@ GameEvents.prototype.group_events = function() {
     var self = this;
     var events = {};
     events[event_constants.USER_ENTERS_GAME] = self.user_enters_handler;
-    events[event_constants.USER_EXITS_GAME] = self.user_exits_handler;
     events[event_constants.USER_SUBMITS_SET] = self.set_submission_handler;
     return events;
 }
 
 GameEvents.prototype.user_enters_handler = function(socket, gameId) {
     var user = socket.user;
-    // data will have the game id
     var game = gm.getGameByID(gameId);
     // add the user to the game
     game.addUser(socket.user);
@@ -31,14 +30,20 @@ GameEvents.prototype.user_enters_handler = function(socket, gameId) {
     // start the game if necessary & let everyone know about he game board
     var game = gm.getGameByID(gameId);
     
-    socket.emit(event_constants.UPDATE_BOARD, game.board());
-}
+    if(!user) return;
 
-GameEvents.prototype.user_exits_handler = function(socket, data) {
-    // data will have the game id
-    // remove the user from the game
-    // if it was the last user to leave the game and the game state is finished, remove the room
-    // let the others know that the user left otherwise
+    // leave lobby
+    socket.leave('lobby');
+    
+    // notify the lobby that the user joined this game
+    socket.to('lobby').emit(event_constants.USER_LEAVES, { type : event_constants.SYSTEM_MESSAGE, msg : sprintf("%s left and joined \"%s\".", user.name(), game._name) });
+
+    game.addUser(user);
+    user.room(gameId);
+    socket.join(gameId);
+
+    LobbyEventsObj.get_all_rooms_handler(socket);
+    socket.emit(event_constants.UPDATE_BOARD, game.board());
 }
 
 GameEvents.prototype.set_submission_handler = function(socket, data) {

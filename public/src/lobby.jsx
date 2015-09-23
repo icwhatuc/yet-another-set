@@ -48,8 +48,10 @@ var RoomList = module.exports = React.createClass({
     componentDidMount : function() {
         var self = this;
 
-        socket.on('get all rooms', self.getAllRoomsEventHandler);
-        socket.emit('get all rooms', "");
+        socket.on(event_constants.GET_ALL_ROOMS, self.getAllRoomsEventHandler);
+        socket.on(event_constants.PERSONAL_ROOM_CREATED, self.roomTransitionHandler);
+        
+        socket.emit(event_constants.ENTER_LOBBY);
     },
     handleNewRoomModal : function(e) {
         $('.lobby-modal').show();

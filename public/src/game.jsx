@@ -6,8 +6,6 @@ var Game = module.exports = React.createClass({
     mixins : [Navigation],
     componentDidMount: function() {
         var self = this;
-        console.log('emitting ' + event_constants.USER_ENTERS_GAME);
-        console.log(this.props.params.id);
         socket.emit( event_constants.USER_ENTERS_GAME, this.props.params.id);
     },
     render : function() {
