@@ -1,14 +1,5 @@
 var event_constants = require('./constants.js').event_constants;
 
-var cards_data = [
-	{ color : 'red', shape : 'diamonds', fill : 'striped', number : 2 },  
-	{ color : 'green', shape : 'spades', fill : 'solid', number : 1 },
-	{ color : 'blue', shape : 'clubs', fill : 'solid', number : 3 },
-	{ color : 'red', shape : 'diamonds', fill : 'empty', number : 2 },
-	{ color : 'blue', shape: 'spades', fill: 'empty', number: 3},
-	{ color : 'green', shape : 'clubs', fill : 'striped', number: 1}
-];
-
 var card_map = {
 	shape : { 1 : 'clubs', 2 : 'diamonds', 3 : 'spades' },
 	fill : { 1 : 'striped', 2 : 'empty', 3 : 'solid' },
@@ -23,17 +14,11 @@ var card_num_map = {
 
 var CardGallery = module.exports = React.createClass({
 	getInitialState : function() {
-		return { data : cards_data.slice(0), selectedCards : [] };
+		return { data : [], selectedCards : [] };
 	},
 	componentDidMount: function() {
 		var self = this;
 		socket.on(event_constants.UPDATE_BOARD, function (board) {
-			/*
-            var cards_data = board.map(function(c) {
-				return { color: card_map.color[c._color], shape: card_map.shape[c._shape], fill: card_map.fill[c._fill], number: c._number };
-			});
-            */
-            console.log(board);
             for(var k = 0; k < board.length; k++)
             {
                 var card = board[k];
@@ -41,13 +26,12 @@ var CardGallery = module.exports = React.createClass({
                 card.shape = card_map.shape[card._shape];
                 card.fill = card_map.fill[card._fill];
                 card.number = card._number;
+                card.index = card._index;
             }
 			self.setState({data : board});
 		});
         
-        console.log("registering: ", event_constants.SET_SUBMISSION_RESULT);
         socket.on(event_constants.SET_SUBMISSION_RESULT, function(is_set) {
-            console.log("IS SET? ", is_set);
             if(!is_set) self.setState({ data : self.state.data });
         });
 	},
@@ -143,9 +127,36 @@ var CardGallery = module.exports = React.createClass({
 		return hash;
 	},
     render: function() {
-		return (
+		var game_board = [];
+		var board_cards = this.state.data.slice(0);
+		var cards_per_row = board_cards.length/3;
+        var card_rows = [];
+        
+		while(board_cards.length > 0) card_rows.push(board_cards.splice(0, cards_per_row));
+
+        for(var k = 0; k < card_rows.length; k++)
+        {
+            var card_row = card_rows[k];
+            var board_row = [];
+            for(var l = 0; l < card_row.length; l++)
+            {
+                var card = card_row[l];
+                console.log(card);
+                board_row.push(
+    			    <Card key={[card.index.toString() + Math.random()].join('-')} color={card.color} shape={card.shape} fill={card.fill} number={card.number} index={card.index}/>
+                );
+            }
+
+            game_board.push(
+    			<div className="card-row clearfix">
+    				{board_row}
+    			</div>
+            );
+        }
+    	
+        return (
 			<div className="card-gallery" onClick={this.handleChildClick}>
-				{this.getRows()}
+				{game_board}
       		</div>
 		);
 	}
