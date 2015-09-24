@@ -169,33 +169,6 @@ var Card = React.createClass({
 	componentWillReceiveProps: function() {
 		this.setState({ selected : false });
 	},
-	numberSetUp: function() {
-		var number = this.props.number;
-
-		var numberText;
-
-		if (number == 1) {
-			numberText = 'one-item';
-		} else if (number == 2) {
-			numberText = 'two-item';
-		} else if (number == 3) {
-			numberText = 'three-item';
-		}
-
-		var indexString = "index-" + this.props.index;
-        var classString = ['card', this.props.color, this.props.fill, this.props.shape, numberText, indexString].join(' ');
-
-		var itemDiv = [];
-		for (var i = 0; i < number; i++) {
-			itemDiv.push( <div className={classString} data-index={this.props.index} ref={this.props.index + '-' + i.toString()} ></div> );
-		}
-
-		return ( 
-			<div className="centercolumn" data-child-classes={classString} >
-				{itemDiv}
-			</div>
-		)
-	},
 	childClick: function(e) {
 		if (this.state.selected === false)
 			this.setState({ selected : true });
@@ -205,14 +178,27 @@ var Card = React.createClass({
         e.target = React.findDOMNode(this.refs[this.props.index.toString() + '-0']); // React.Children.only(this.props.children); // TODO: hack - the target can be the card or one of the sub divs in the card but need the target to be a card
 	},
 	render: function() {
-		var classString = 'card-block';
+		var number = this.props.number;
+        var numberClasses = [ 'one-item', 'two-item', 'three-item' ];
+		var indexString = "index-" + this.props.index;
+        var classString = ['card', this.props.color, this.props.fill, this.props.shape, numberClasses[parseInt(number, 10) - 1], indexString].join(' ');
+		var cardShapes = [];
+		
+        for (var i = 0; i < number; i++) {
+			cardShapes.push(
+                <div className={classString} data-index={this.props.index} ref={this.props.index + '-' + i.toString()}>
+                </div>
+            );
+		}
 
 		if (this.state.selected == true)
 			classString += ' ' + 'selected';
 
         return (
-        	<div className={classString} onClick={this.childClick}>
-	            {this.numberSetUp()}
+        	<div className="card-block" onClick={this.childClick}>
+                <div className="centercolumn">
+                    {cardShapes}
+                </div>
 	        </div>
         );
     }
