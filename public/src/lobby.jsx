@@ -150,6 +150,24 @@ var ModalForm = React.createClass({
         };
         socket.emit(event_constants.ROOM_CREATED, newRoom);
     },
+    handleRoomFormChange: function() {
+        var roomName = React.findDOMNode(this.refs.roomName).value.trim();
+        var roomDescription = React.findDOMNode(this.refs.roomDescription).value.trim();
+        var roomCapacity = parseInt(React.findDOMNode(this.refs.roomCapacity).value.trim(), 10);
+        var error;
+        
+        roomCapacity = isNaN(roomCapacity) ? 4 : roomCapacity;
+        
+        if(roomName.trim().length == 0)
+            error = "A name for your new game room is required.";
+        else if(roomCapacity > 8)
+            error = "A game room can have a maximum of eight players.";
+        if(error)
+        {
+            $('#new-room-info').text('error');
+            // $('#new-room-info').classes('error');
+        }
+    },
     render: function() {
         return (
             <div className="lobby-modal" style={{display: "none"}}>
@@ -160,24 +178,24 @@ var ModalForm = React.createClass({
                     </div>
                     <div className="ui middle content">
                         <div className="column">
-                            <p>Please provide details about the new game room you want to create.</p>
+                            <p id="new-room-info">Please provide details about the new game room you want to create.</p>
                             <form className="ui large form">
                                 <div className="field">
                                     <div className="ui inverted left icon input">
                                         <i className="terminal icon"></i>
-                                        <input ref="roomName" type="text" placeholder="Enter a room name"/>
+                                        <input ref="roomName" type="text" placeholder="Name (required)" onChange={this.handleRoomFormChange}/>
                                     </div>
                                 </div>
                                 <div className="field">
                                     <div className="ui inverted left icon input">
                                         <i className="comment outline icon"></i>
-                                        <input ref="roomDescription" type="text" placeholder="Enter a description"/>
+                                        <input ref="roomDescription" type="text" placeholder="Description" onChange={this.handleRoomFormChange}/>
                                     </div>
                                 </div>
                                 <div className="field">
                                     <div className="ui inverted left icon input">
                                         <i className="users icon"></i>
-                                        <input ref="roomCapacity" id="size" type="number" placeholder="# of players"/>
+                                        <input ref="roomCapacity" id="size" type="number" placeholder="# of players" onChange={this.handleRoomFormChange}/>
                                     </div>
                                 </div>
                             </form>
@@ -188,7 +206,7 @@ var ModalForm = React.createClass({
                             <i className="remove icon"></i>
                             Cancel
                         </div>
-                        <div className="ui green ok inverted button">
+                        <div id="new-room-button" className="ui green ok inverted button">
                             <i className="checkmark icon"></i>
                             Create Room
                         </div>
